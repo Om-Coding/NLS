@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+  <h2>Book a Coding Class</h2>
+  <input id="topic" placeholder="Class Topic" />
+  <input id="time" type="datetime-local" />
+  <input id="zoom" placeholder="Zoom Link" />
+  <button onclick="book()">Book Class</button>
+
+  <script>
+    const username = localStorage.getItem("username");
+    if (!username) window.location.href = "login.html";
+
+    async function book() {
+      const res = await fetch('YOUR_SCRIPT_URL', {
+        method: 'POST',
+        body: JSON.stringify({
+          action: "book",
+          username,
+          topic: document.getElementById("topic").value,
+          time: document.getElementById("time").value,
+          zoomLink: document.getElementById("zoom").value
+        })
+      });
+      const data = await res.json();
+      if (data.success) alert("Class booked!"); else alert("Error");
+    }
+  </script>
+</body>
+</html>
